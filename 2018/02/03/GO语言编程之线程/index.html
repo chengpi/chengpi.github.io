@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <title>GO语言编程之线程</title>
+  <meta name="description" content="go语言编程秘密">
+  <meta name="author" content="黎跃春">
+
+  <meta name="keywords" content="区块链技术,区块链视频,区块链学习,solidity 中文,fabric 中文,hyperledger 中文"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GO语言编程之线程">
+  <meta name="twitter:description" content="go语言编程秘密">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GO语言编程之线程">
+  <meta property="og:description" content="go语言编程秘密">
+  <meta property="og:site_name" content="区块链技术,区块链视频,区块链学习,solidity 中文,fabric 中文,hyperledger 中文e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="/2018/02/03/GO%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B/">
+  <link rel="alternate" type="application/rss+xml" title="Gump区块链博客" href=" /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <!-- 百度统计 -->
+  
+
+  <!-- google 统计 -->
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 Gump区块链博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/mysculpture.png" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 14px">
+                   Gump 
+                </h2>´
+                <p style="font-size: 6px">
+                   区块链 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Gump区块链博客" class="blog-button">Gump区块链博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">杨俊诚，广东技术师范大学本科在读生，亚洲DACA区块链协会和清华大学区块链协会联合举办的“区块链技术公开课”六期学员，计算机编程技术和区块链底层技术爱好者。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/public.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">链说公众号</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/mycode.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">博主微信号</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">GO语言编程之线程</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-02-03 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-02-03</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <blockquote>
+  <p>来源：BLOGS OF GUMP</p>
+
+  <p>编辑：杨俊诚</p>
+</blockquote>
+
+<hr />
+<h1 id="go语言编程之线程">Go语言编程之线程</h1>
+<p>本文主要通过讲解以下几点来具体介绍线程
+<br />1.线程的概念
+<br />2.线程的运行机制
+<br />3.用go语言实现线程的程序编写</p>
+
+<h2 id="线程的概念">线程的概念</h2>
+<p>要理解线程就要先明白什么是进程。
+何为进程？
+进程就是指运行中的应用程序。
+每个进程都有自己的独立的地址空间（内存空间），比如用户在window操作系统下双击桌面的IE浏览器，就启动了一个进程，操作系统就会为该进程分配独立的地址空间，当用户再次双击IE浏览器，又启动了一个进程，操作系统将为新的进程分配新的独立的地址空间，目前操作系统都支持多进程。
+下面的图是Mac系统下活动监视器呈现的当前系统运行的进程
+（如何打开mac的活动监视器，请参照链接：https://jingyan.baidu.com/article/acf728fd45ee83f8e510a3c2.html）
+线程往往都是存在于进程体里的</p>
+
+<p><img src="/images/media/20180203/001.png" alt="" /></p>
+
+<p>每个进程都有自己独立的地址空间，只能读取自己内存空间内的数据，如果一个进程试图读取另一个进程的内存空间数据，那么这个程序可能就不是正常的程序，有可能是病毒程序。</p>
+
+<p>在明白进程后，接下来就可以介绍线程
+何为线程？
+线程是进程中的一个实体，是被系统独立调度和分派的基本单位，线程自己不拥有系统资源，只拥有一点在运行中必不可少的的资源，但它可以与同属于一个进程的其他线程共享进程所拥有的全部资源，一个线程可以创建和撤销另一个线程，同一个进程中的多个线程之前可以并发执行，线程有就绪，阻塞和运行三个基本状态。
+换言之，就是：
+<!-- <font color="red"> -->
+<br />1.线程是轻量级的进程
+<br />2.线程没有独立的地址空间（内存空间）
+<br />3.线程是由进程创建的（寄生在进程）
+<br />4.一个进程可以拥有多个线程—&gt;多线程编程
+<br />5.线程有几种状态：<!-- </font> --><font color="green">新建(new)，就绪(Runnable)，运行(Running)，阻塞(Blocked)，死亡（Dead）</font></p>
+
+<p><img src="/images/media/20180203/002.png" alt="" /></p>
+
+<h2 id="用go语言实现线程的程序编写">用go语言实现线程的程序编写</h2>
+<p>我用Mac电脑下的Atom来编写go语言代码来实现线程。</p>
+
+<p><img src="/images/media/20180203/003.png" alt="" /></p>
+
+<p><img src="/images/media/20180203/004.png" alt="" /></p>
+
+<p>上面有时会打印出现i或者j的值（说明foo( )或bar( )函数运行过）原因是主线程和两个分线程在并发执行，资源竞争时，主线程比较霸道，占用CPU资源较多，导致分线程占用CPU资源少，而主线程率先运行结束（程序执行到主函数最后一个右花括号时），整个程序不等分线程运行完就结束，导致分线程没怎么执行它自己的命令，也就打印不出多少i和j值了（当然有时分线程也能运行一会，执行这么一两条自己的命令，打印出一两个i或j值）</p>
+
+<p><img src="/images/media/20180203/005.png" alt="" /></p>
+
+<p>再看下面代码：</p>
+
+<p><img src="/images/media/20180203/006.png" alt="" /></p>
+
+<p>var wg sync.WaitGroup//创建一个wg 对象，类型为sync.WaitGroup（sync里面的一个WaitGroup类）
+<br />wg.Add(2) //添加线程的个数并统计管理所添加的线程
+<br />go foo()  //把foo()所有任务放到分线程中
+<br />go bar()  //把bar()所有任务放到分线程中
+<br />wg.Wait() //这条命令意在让主线程需要等待分线程去执行，只有队列中counter计数器的值变为0时，主线程才会运行wg.Wait()这条命令后面的命令直至结束
+<br />Wg.Done() //这行命令是添加在分线程所要运行的地方里的，当分线程中的任务处理完成后，counter计数器减1</p>
+
+<p>再看如下代码</p>
+
+<p><img src="/images/media/20180203/007.png" alt="" /></p>
+
+<p>运行结果如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Foo: 0 Counter: 1
+Foo: 1 Counter: 3
+Foo: 2 Counter: 4
+Bar: 0 Counter: 2
+Bar: 1 Counter: 5
+Foo: 3 Counter: 6
+Foo: 4 Counter: 7
+Bar: 2 Counter: 8
+Foo: 5 Counter: 9
+Foo: 6 Counter: 10
+Bar: 3 Counter: 11
+Foo: 7 Counter: 12
+Bar: 4 Counter: 13
+Foo: 8 Counter: 14
+Foo: 9 Counter: 15
+Foo: 10 Counter: 16
+Bar: 5 Counter: 17
+Foo: 11 Counter: 18
+Foo: 12 Counter: 19
+Bar: 6 Counter: 20
+Foo: 13 Counter: 21
+Bar: 7 Counter: 22
+Foo: 14 Counter: 23
+Bar: 8 Counter: 24
+Bar: 9 Counter: 25
+Bar: 10 Counter: 26
+Foo: 15 Counter: 27
+Foo: 16 Counter: 28
+Bar: 11 Counter: 29
+Bar: 12 Counter: 30
+Foo: 17 Counter: 31
+Foo: 18 Counter: 32
+Bar: 13 Counter: 33
+Bar: 14 Counter: 34
+Bar: 15 Counter: 35
+Bar: 16 Counter: 36
+Foo: 19 Counter: 37
+Bar: 17 Counter: 38
+Bar: 18 Counter: 39
+Bar: 19 Counter: 40
+Final Counter: 40
+</code></pre>
+</div>
+<p><img src="/images/media/20180203/008.png" alt="" /></p>
+
+<p>会出现这样的情况还是因为资源竞争的问题，原本counter变量已经累加到4，但由于foo( )所在的分线程没得来得及更新寄存器的数据，便被bar( )所在分线程占据资源，所以会出现打印出counter值为2的情况。</p>
+
+<p>再看如下代码：（截取了整个代码中重要部分）</p>
+
+<p><img src="/images/media/20180203/009.png" alt="" /></p>
+
+<p>运行结果如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>init()
+8
+main() start()
+main: 0 a
+main: 1 a
+main: 2 a
+main: 3 a
+main: 4 a
+main: 5 a
+main: 6 a
+main: 7 a
+main: 8 a
+main: 9 a
+main: 0
+f2: 0
+f1: 0
+f1: 1
+f1: 2
+f1: 3
+f2: 1
+f1: 4
+f1: 5
+f1: 6
+f2: 2
+f1: 7
+f1: 8
+f1: 9
+f1: 10
+f2: 3
+f1: 11
+f1: 12
+f1: 13
+f1: 14
+f2: 4
+f1: 15
+f1: 16
+f1: 17
+main: 1
+f1: 18
+f2: 5
+f1: 19
+f1: 20
+f1: 21
+f2: 6
+f1: 22
+f1: 23
+f1: 24
+f2: 7
+f1: 25
+f1: 26
+f1: 27
+f1: 28
+f2: 8
+f1: 29
+f1: 30
+f1: 31
+f1: 32
+f2: 9
+f1: 33
+f1: 34
+f1: 35
+main: 2
+f2: 10
+f1: 36
+f1: 37
+f1: 38
+f1: 39
+f2: 11
+f1: 40
+f1: 41
+f1: 42
+f2: 12
+f1: 43
+f1: 44
+f2: 13
+f2: 14
+main: 3
+f2: 15
+f2: 16
+f2: 17
+f2: 18
+f2: 19
+main: 4
+f2: 20
+f2: 21
+f2: 22
+f2: 23
+f2: 24
+main: 5
+f2: 25
+f2: 26
+f2: 27
+f2: 28
+main: 6
+f2: 29
+f2: 30
+f2: 31
+f2: 32
+f2: 33
+main: 7
+f2: 34
+f2: 35
+f2: 36
+f2: 37
+f2: 38
+main: 8
+f2: 39
+f2: 40
+f2: 41
+f2: 42
+f2: 43
+main: 9
+f2: 44
+main: 10
+main: 11
+main: 12
+main: 13
+main: 14
+main: 15
+main: 16
+main: 17
+main: 18
+main: 19
+main: 20
+main: 21
+main: 22
+main: 23
+main: 24
+main: 25
+main: 26
+main: 27
+main: 28
+main: 29
+main: 30
+main: 31
+main: 32
+main: 33
+main: 34
+main: 35
+main: 36
+main: 37
+main: 38
+main: 39
+main: 40
+main: 41
+main: 42
+main: 43
+main: 44
+main: 0 c
+main: 1 c
+main: 2 c
+main: 3 c
+main: 4 c
+main: 5 c
+main: 6 c
+main: 7 c
+main: 8 c
+main: 9 c
+
+</code></pre>
+</div>
+<p>从运行结果可以推测出运行命令大致顺序：</p>
+
+<p><img src="/images/media/20180203/010.png" alt="" /></p>
+
+<p><img src="/images/media/20180203/011.png" alt="" /></p>
+
+  </section>
+  <h2 style="color:red"><strong>版权声明：博客中的文章版权归博主所有，不可作商用，转载请注明出处，合作请联系：Gump(微信)</strong></h2>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <!-- <span>扫码支持</span> -->
+                    <img src="/images/payimg/alipayimg.png" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">
+                    <img src="/images/payimg/weipayimg.png" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/01/31/GO%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%AE%A1%E9%81%93/" data-toggle="tooltip" data-placement="top" title="GO语言编程之管道">上一篇：  <span>GO语言编程之管道</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2018/03/08/ipfs/" data-toggle="tooltip" data-placement="top" title="IPFS">下一篇：  <span>IPFS</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=GO语言编程之线程 ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5351843558" title="@5351843558 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/chengpizi" title="@chengpizi 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:1822300185@qq.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="http://www.kongyixueyuan.com">区块链技术视频网站</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+        Copyright &copy; 2018 Gump区块链博客 京ICP备15065741号. 
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>

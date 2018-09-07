@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <title>Hyperledger Fabric知识记录（1）-- 概念与环境搭建</title>
+  <meta name="description" content="Hyperledger Fabric">
+  <meta name="author" content="黎跃春">
+
+  <meta name="keywords" content="区块链技术,区块链视频,区块链学习,solidity 中文,fabric 中文,hyperledger 中文"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hyperledger Fabric知识记录（1）-- 概念与环境搭建">
+  <meta name="twitter:description" content="Hyperledger Fabric">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hyperledger Fabric知识记录（1）-- 概念与环境搭建">
+  <meta property="og:description" content="Hyperledger Fabric">
+  <meta property="og:site_name" content="区块链技术,区块链视频,区块链学习,solidity 中文,fabric 中文,hyperledger 中文e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="/2018/03/16/fabric%E7%9F%A5%E8%AF%861/">
+  <link rel="alternate" type="application/rss+xml" title="Gump区块链博客" href=" /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <!-- 百度统计 -->
+  
+
+  <!-- google 统计 -->
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 Gump区块链博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/mysculpture.png" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 14px">
+                   Gump 
+                </h2>´
+                <p style="font-size: 6px">
+                   区块链 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Gump区块链博客" class="blog-button">Gump区块链博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">杨俊诚，广东技术师范大学本科在读生，亚洲DACA区块链协会和清华大学区块链协会联合举办的“区块链技术公开课”六期学员，计算机编程技术和区块链底层技术爱好者。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/public.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">链说公众号</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/mycode.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">博主微信号</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Hyperledger Fabric知识记录（1）-- 概念与环境搭建</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-03-16 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-03-16</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <blockquote>
+  <p>来源：BLOGS OF GUMP</p>
+
+  <p>编辑：杨俊诚</p>
+</blockquote>
+
+<hr />
+<h1 id="hyperledger-fabric知识记录1-概念与环境搭建">Hyperledger Fabric知识记录（1）– 概念与环境搭建</h1>
+<hr />
+
+<p>本文将着重介绍有关Hyperledger Fabric的相关内容，并且带着大家搭建Fabric开发环境。
+Hyperledge fabric项目是Linux 基金会发起并联合IBM 创建的开源区块链分布式账本项目。Github地址：https://github.com/hyperledger/fabric
+Hyperledge fabric的开发环境是一个运行在vagrant（一层virtualbox上的虚拟机皮）里的Ubuntu映像，并在虚拟机内部运行了若干Docker容器。从概念上说，就是在一个主机里启动了一个虚拟机，然后在虚拟机上启动Docker容器。</p>
+
+<p>Host -&gt; VM -&gt; Docker</p>
+
+<p>即 主机 -&gt; 虚拟机 -&gt; Docker</p>
+
+<p>使用vagrant集成的开发环境开发允许开发者使用自己喜欢的操作系统和编辑器来开发，同时又可以让系统运行在一个与开发团队一致的开发环境中。</p>
+
+<h2 id="ubuntu下的环境搭建">Ubuntu下的环境搭建</h2>
+<p>Mac OSX下的环境搭建参考此文：https://www.jianshu.com/p/8beb3a355f99</p>
+
+<p>快速入门:  http://hyperledger-fabric.readthedocs.io/en/release-1.1/getting_started.html</p>
+
+<p>首先我们需要先安装这么几种工具</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git
+curl
+vim(可选vm)
+golang及其配置环境
+docker和docker-compose
+Node与npm(可选)
+Hyperledger Fabric Samples
+</code></pre>
+</div>
+<h3 id="安装git">安装git</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt update
+$ sudo apt install git
+</code></pre>
+</div>
+<p>查看是否安装成功</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git
+usage: git [--version] [--help] [-C &lt;path&gt;] [-c name=value]
+           [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+           &lt;command&gt; [&lt;args&gt;]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common history
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help &lt;command&gt;' or 'git help &lt;concept&gt;'
+to read about a specific subcommand or concept.
+</code></pre>
+</div>
+<p>显示安装成功了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>这些是各种场合常见的 Git 命令：
+
+开始一个工作区（参见：git help tutorial）
+   clone      克隆一个仓库到一个新目录
+   init       创建一个空的 Git 仓库或重新初始化一个已存在的仓库
+
+在当前变更上工作（参见：git help everyday）
+   add        添加文件内容至索引
+   mv         移动或重命名一个文件、目录或符号链接
+   reset      重置当前 HEAD 到指定状态
+   rm         从工作区和索引中删除文件
+
+检查历史和状态（参见：git help revisions）
+   bisect     通过二分查找定位引入 bug 的提交
+   grep       输出和模式匹配的行
+   log        显示提交日志
+   show       显示各种类型的对象
+   status     显示工作区状态
+
+扩展、标记和调校您的历史记录
+   branch     列出、创建或删除分支
+   checkout   切换分支或恢复工作区文件
+   commit     记录变更到仓库
+   diff       显示提交之间、提交和工作区之间等的差异
+   merge      合并两个或更多开发历史
+   rebase     本地提交转移至更新后的上游分支中
+   tag        创建、列出、删除或校验一个 GPG 签名的标签对象
+
+协同（参见：git help workflows）
+   fetch      从另外一个仓库下载对象和引用
+   pull       获取并整合另外的仓库或一个本地分支
+   push       更新远程引用和相关的对象
+
+命令 'git help -a' 和 'git help -g' 显示可用的子命令和一些概念帮助。
+查看 'git help &lt;命令&gt;' 或 'git help &lt;概念&gt;' 以获取给定子命令或概念的
+帮助。
+
+
+
+</code></pre>
+</div>
+<h3 id="安装curl">安装curl</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt install curl
+</code></pre>
+</div>
+<p>查看安装结果</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ curl --help
+Usage: curl [options...] &lt;url&gt;
+Options: (H) means HTTP/HTTPS only, (F) means FTP only
+     --anyauth       Pick "any" authentication method (H)
+ -a, --append        Append to target file when uploading (F/SFTP)
+     --basic         Use HTTP Basic Authentication (H)
+     --cacert FILE   CA certificate to verify peer against (SSL)
+     --capath DIR    CA directory to verify peer against (SSL)
+ -E, --cert CERT[:PASSWD]  Client certificate file and password (SSL)
+     --cert-status   Verify the status of the server certificate (SSL)
+     --cert-type TYPE  Certificate file type (DER/PEM/ENG) (SSL)
+     --ciphers LIST  SSL ciphers to use (SSL)
+     --compressed    Request compressed response (using deflate or gzip)
+ -K, --config FILE   Read config from FILE
+     --connect-timeout SECONDS  Maximum time allowed for connection
+ -C, --continue-at OFFSET  Resumed transfer OFFSET
+ -b, --cookie STRING/FILE  Read cookies from STRING/FILE (H)
+ -c, --cookie-jar FILE  Write cookies to FILE after operation (H)
+     --create-dirs   Create necessary local directory hierarchy
+     --crlf          Convert LF to CRLF in upload
+     --crlfile FILE  Get a CRL list in PEM format from the given file
+ -d, --data DATA     HTTP POST data (H)
+     --data-raw DATA  HTTP POST data, '@' allowed (H)
+     --data-ascii DATA  HTTP POST ASCII data (H)
+     --data-binary DATA  HTTP POST binary data (H)
+     --data-urlencode DATA  HTTP POST data url encoded (H)
+     --delegation STRING  GSS-API delegation permission
+     --digest        Use HTTP Digest Authentication (H)
+     --disable-eprt  Inhibit using EPRT or LPRT (F)
+     --disable-epsv  Inhibit using EPSV (F)
+     --dns-servers   DNS server addrs to use: 1.1.1.1;2.2.2.2
+     --dns-interface  Interface to use for DNS requests
+     --dns-ipv4-addr  IPv4 address to use for DNS requests, dot notation
+     --dns-ipv6-addr  IPv6 address to use for DNS requests, dot notation
+ -D, --dump-header FILE  Write the headers to FILE
+     --egd-file FILE  EGD socket path for random data (SSL)
+     --engine ENGINE  Crypto engine (use "--engine list" for list) (SSL)
+     --expect100-timeout SECONDS How long to wait for 100-continue (H)
+ -f, --fail          Fail silently (no output at all) on HTTP errors (H)
+     --false-start   Enable TLS False Start.
+ -F, --form CONTENT  Specify HTTP multipart POST data (H)
+     --form-string STRING  Specify HTTP multipart POST data (H)
+     --ftp-account DATA  Account data string (F)
+     --ftp-alternative-to-user COMMAND  String to replace "USER [name]" (F)
+     --ftp-create-dirs  Create the remote dirs if not present (F)
+     --ftp-method [MULTICWD/NOCWD/SINGLECWD]  Control CWD usage (F)
+     --ftp-pasv      Use PASV/EPSV instead of PORT (F)
+ -P, --ftp-port ADR  Use PORT with given address instead of PASV (F)
+     --ftp-skip-pasv-ip  Skip the IP address for PASV (F)
+     --ftp-pret      Send PRET before PASV (for drftpd) (F)
+     --ftp-ssl-ccc   Send CCC after authenticating (F)
+     --ftp-ssl-ccc-mode ACTIVE/PASSIVE  Set CCC mode (F)
+     --ftp-ssl-control  Require SSL/TLS for FTP login, clear for transfer (F)
+ -G, --get           Send the -d data with a HTTP GET (H)
+ -g, --globoff       Disable URL sequences and ranges using {} and []
+ -H, --header LINE   Pass custom header LINE to server (H)
+ -I, --head          Show document info only
+ -h, --help          This help text
+     --hostpubmd5 MD5  Hex-encoded MD5 string of the host public key. (SSH)
+ -0, --http1.0       Use HTTP 1.0 (H)
+     --http1.1       Use HTTP 1.1 (H)
+     --http2         Use HTTP 2 (H)
+     --ignore-content-length  Ignore the HTTP Content-Length header
+ -i, --include       Include protocol headers in the output (H/F)
+ -k, --insecure      Allow connections to SSL sites without certs (H)
+     --interface INTERFACE  Use network INTERFACE (or address)
+ -4, --ipv4          Resolve name to IPv4 address
+ -6, --ipv6          Resolve name to IPv6 address
+ -j, --junk-session-cookies  Ignore session cookies read from file (H)
+     --keepalive-time SECONDS  Wait SECONDS between keepalive probes
+     --key KEY       Private key file name (SSL/SSH)
+     --key-type TYPE  Private key file type (DER/PEM/ENG) (SSL)
+     --krb LEVEL     Enable Kerberos with security LEVEL (F)
+     --libcurl FILE  Dump libcurl equivalent code of this command line
+     --limit-rate RATE  Limit transfer speed to RATE
+ -l, --list-only     List only mode (F/POP3)
+     --local-port RANGE  Force use of RANGE for local port numbers
+ -L, --location      Follow redirects (H)
+     --location-trusted  Like '--location', and send auth to other hosts (H)
+     --login-options OPTIONS  Server login options (IMAP, POP3, SMTP)
+ -M, --manual        Display the full manual
+     --mail-from FROM  Mail from this address (SMTP)
+     --mail-rcpt TO  Mail to this/these addresses (SMTP)
+     --mail-auth AUTH  Originator address of the original email (SMTP)
+     --max-filesize BYTES  Maximum file size to download (H/F)
+     --max-redirs NUM  Maximum number of redirects allowed (H)
+ -m, --max-time SECONDS  Maximum time allowed for the transfer
+     --metalink      Process given URLs as metalink XML file
+     --negotiate     Use HTTP Negotiate (SPNEGO) authentication (H)
+ -n, --netrc         Must read .netrc for user name and password
+     --netrc-optional  Use either .netrc or URL; overrides -n
+     --netrc-file FILE  Specify FILE for netrc
+ -:, --next          Allows the following URL to use a separate set of options
+     --no-alpn       Disable the ALPN TLS extension (H)
+ -N, --no-buffer     Disable buffering of the output stream
+     --no-keepalive  Disable keepalive use on the connection
+     --no-npn        Disable the NPN TLS extension (H)
+     --no-sessionid  Disable SSL session-ID reusing (SSL)
+     --noproxy       List of hosts which do not use proxy
+     --ntlm          Use HTTP NTLM authentication (H)
+     --oauth2-bearer TOKEN  OAuth 2 Bearer Token (IMAP, POP3, SMTP)
+ -o, --output FILE   Write to FILE instead of stdout
+     --pass PASS     Pass phrase for the private key (SSL/SSH)
+     --path-as-is    Do not squash .. sequences in URL path
+     --pinnedpubkey FILE/HASHES Public key to verify peer against (SSL)
+     --post301       Do not switch to GET after following a 301 redirect (H)
+     --post302       Do not switch to GET after following a 302 redirect (H)
+     --post303       Do not switch to GET after following a 303 redirect (H)
+ -#, --progress-bar  Display transfer progress as a progress bar
+     --proto PROTOCOLS  Enable/disable PROTOCOLS
+     --proto-default PROTOCOL  Use PROTOCOL for any URL missing a scheme
+     --proto-redir PROTOCOLS   Enable/disable PROTOCOLS on redirect
+ -x, --proxy [PROTOCOL://]HOST[:PORT]  Use proxy on given port
+     --proxy-anyauth  Pick "any" proxy authentication method (H)
+     --proxy-basic   Use Basic authentication on the proxy (H)
+     --proxy-digest  Use Digest authentication on the proxy (H)
+     --proxy-negotiate  Use HTTP Negotiate (SPNEGO) authentication on the proxy (H)
+     --proxy-ntlm    Use NTLM authentication on the proxy (H)
+     --proxy-service-name NAME  SPNEGO proxy service name
+     --service-name NAME  SPNEGO service name
+ -U, --proxy-user USER[:PASSWORD]  Proxy user and password
+     --proxy1.0 HOST[:PORT]  Use HTTP/1.0 proxy on given port
+ -p, --proxytunnel   Operate through a HTTP proxy tunnel (using CONNECT)
+     --pubkey KEY    Public key file name (SSH)
+ -Q, --quote CMD     Send command(s) to server before transfer (F/SFTP)
+     --random-file FILE  File for reading random data from (SSL)
+ -r, --range RANGE   Retrieve only the bytes within RANGE
+     --raw           Do HTTP "raw"; no transfer decoding (H)
+ -e, --referer       Referer URL (H)
+ -J, --remote-header-name  Use the header-provided filename (H)
+ -O, --remote-name   Write output to a file named as the remote file
+     --remote-name-all  Use the remote file name for all URLs
+ -R, --remote-time   Set the remote file's time on the local output
+ -X, --request COMMAND  Specify request command to use
+     --resolve HOST:PORT:ADDRESS  Force resolve of HOST:PORT to ADDRESS
+     --retry NUM   Retry request NUM times if transient problems occur
+     --retry-delay SECONDS  Wait SECONDS between retries
+     --retry-max-time SECONDS  Retry only within this period
+     --sasl-ir       Enable initial response in SASL authentication
+ -S, --show-error    Show error. With -s, make curl show errors when they occur
+ -s, --silent        Silent mode (don't output anything)
+     --socks4 HOST[:PORT]  SOCKS4 proxy on given host + port
+     --socks4a HOST[:PORT]  SOCKS4a proxy on given host + port
+     --socks5 HOST[:PORT]  SOCKS5 proxy on given host + port
+     --socks5-hostname HOST[:PORT]  SOCKS5 proxy, pass host name to proxy
+     --socks5-gssapi-service NAME  SOCKS5 proxy service name for GSS-API
+     --socks5-gssapi-nec  Compatibility with NEC SOCKS5 server
+ -Y, --speed-limit RATE  Stop transfers below RATE for 'speed-time' secs
+ -y, --speed-time SECONDS  Trigger 'speed-limit' abort after SECONDS (default: 30)
+     --ssl           Try SSL/TLS (FTP, IMAP, POP3, SMTP)
+     --ssl-reqd      Require SSL/TLS (FTP, IMAP, POP3, SMTP)
+ -2, --sslv2         Use SSLv2 (SSL)
+ -3, --sslv3         Use SSLv3 (SSL)
+     --ssl-allow-beast  Allow security flaw to improve interop (SSL)
+     --ssl-no-revoke    Disable cert revocation checks (WinSSL)
+     --stderr FILE   Where to redirect stderr (use "-" for stdout)
+     --tcp-nodelay   Use the TCP_NODELAY option
+ -t, --telnet-option OPT=VAL  Set telnet option
+     --tftp-blksize VALUE  Set TFTP BLKSIZE option (must be &gt;512)
+ -z, --time-cond TIME  Transfer based on a time condition
+ -1, --tlsv1         Use &gt;= TLSv1 (SSL)
+     --tlsv1.0       Use TLSv1.0 (SSL)
+     --tlsv1.1       Use TLSv1.1 (SSL)
+     --tlsv1.2       Use TLSv1.2 (SSL)
+     --trace FILE    Write a debug trace to FILE
+     --trace-ascii FILE  Like --trace, but without hex output
+     --trace-time    Add time stamps to trace/verbose output
+     --tr-encoding   Request compressed transfer encoding (H)
+ -T, --upload-file FILE  Transfer FILE to destination
+     --url URL       URL to work with
+ -B, --use-ascii     Use ASCII/text transfer
+ -u, --user USER[:PASSWORD]  Server user and password
+     --tlsuser USER  TLS username
+     --tlspassword STRING  TLS password
+     --tlsauthtype STRING  TLS authentication type (default: SRP)
+     --unix-socket FILE    Connect through this Unix domain socket
+ -A, --user-agent STRING  Send User-Agent STRING to server (H)
+ -v, --verbose       Make the operation more talkative
+ -V, --version       Show version number and quit
+ -w, --write-out FORMAT  Use output FORMAT after completion
+     --xattr         Store metadata in extended file attributes
+ -q                  Disable .curlrc (must be first parameter)
+</code></pre>
+</div>
+<h3 id="安装vim">安装vim</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt install vim
+</code></pre>
+</div>
+
+<h3 id="安装docker">安装Docker</h3>
+<p>安装docker这个很重要，而且这个过程会出现一些坑
+参考文档：https://blog.csdn.net/github_35160620/article/details/52115542</p>
+
+<p>https://blog.csdn.net/csdn_duomaomao/article/details/77619402</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt update
+</code></pre>
+</div>
+<p>上面这一步有些会出现更新不成功的情况
+出现这个问题的原因是： 我们执行sudo apt update这条命令时，系统会根据/etc/apt/sources.list这么个文件内所写的内容（里面记录有软件源更新网站的网址路径）去寻找相应的软件版本下载途径。但是如果之前 /etc/apt/sources.list 路径里面的记录的软件源更新网站有的已经过时了，就需要更改新的网站路径。</p>
+
+<p>操作如下：
+首先，我们将现在问题的 /etc/apt/sources.list 文件备份一份。（只是一个好习惯而已）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+</code></pre>
+</div>
+
+<p>或者</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>注： /etc/apt/sources.list 文件 里面存放的是 Linux系统需要的软件源的网站地址。
+</code></pre>
+</div>
+<p>你也可以按照下面方式操作</p>
+
+<p><img src="/images/media/fabric/fabric01.png" alt="" /></p>
+
+<p><img src="/images/media/fabric/fabric02.png" alt="" /></p>
+
+<p><img src="/images/media/fabric/fabric03.png" alt="" /></p>
+
+<p><img src="/images/media/fabric/fabric04.png" alt="" /></p>
+
+<p><img src="/images/media/fabric/fabric05.png" alt="" /></p>
+
+<p>接着，我们重新编写一个 /etc/apt/sources.list 文件：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo vim /etc/apt/sources.list
+
+</code></pre>
+</div>
+<p>或者</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo gedit /etc/apt/sources.list
+</code></pre>
+</div>
+<p>注意上面的命令要有sudo，不然的话这个文件会显示是只读模式，没有编辑的权限</p>
+
+<p><img src="/images/media/fabric/fabric06.png" alt="" /></p>
+
+<p>此外，用vim命令来编辑时，可以先使用:%d这个命令先清除这个文本所有内容，然后再按下i键进入编辑模式，再把复制的内容粘贴上去</p>
+
+<p>将sources.list里的内容替换成下面的</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#deb cdrom:[Ubuntu 16.04.4 LTS _Xenial Xerus_ - Release amd64 (20180228)]/ xenial main restricted
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial universe
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates multiverse
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu xenial partner
+# deb-src http://archive.canonical.com/ubuntu xenial partner
+
+deb http://security.ubuntu.com/ubuntu xenial-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb http://security.ubuntu.com/ubuntu xenial-security universe
+# deb-src http://security.ubuntu.com/ubuntu xenial-security universe
+deb http://security.ubuntu.com/ubuntu xenial-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu xenial-security multiverse
+
+</code></pre>
+</div>
+<p>或者将下面的模板内容，复制粘贴到 /etc/apt/sources.list 文件里面后，保存就可以了：（我们使用的Ubuntu 是16.04）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+##测试版源
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-proposed main restricted universe multiverse
+# 源码
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+##测试版源
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-proposed main restricted universe multiverse
+</code></pre>
+</div>
+<p>接着再执行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get update
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt update
+获取:1 http://security.ubuntu.com/ubuntu xenial-security InRelease [107 kB]
+忽略:2 http://ppa.launchpad.net/fcitx-team/nightly/ubuntu xenial InRelease
+错误:3 http://ppa.launchpad.net/fcitx-team/nightly/ubuntu xenial Release   404  Not Found
+获取:4 http://security.ubuntu.com/ubuntu xenial-security/main amd64 DEP-11 Metadata [67.7 kB]
+获取:5 http://security.ubuntu.com/ubuntu xenial-security/main DEP-11 64x64 Icons [68.0 kB]
+获取:6 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 DEP-11 Metadata [107 kB]
+获取:7 http://security.ubuntu.com/ubuntu xenial-security/universe DEP-11 64x64 Icons [142 kB]
+命中:8 http://cn.archive.ubuntu.com/ubuntu xenial InRelease    9 http://cn.archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+获取:10 http://cn.archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+获取:11 http://cn.archive.ubuntu.com/ubuntu xenial-updates/main amd64 DEP-11 Metadata [318 kB]
+获取:12 http://cn.archive.ubuntu.com/ubuntu xenial-updates/main DEP-11 64x64 Icons [228 kB]
+获取:13 http://cn.archive.ubuntu.com/ubuntu xenial-updates/universe Translation-en [256 kB]
+获取:14 http://cn.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 DEP-11 Metadata [246 kB]
+获取:15 http://cn.archive.ubuntu.com/ubuntu xenial-updates/universe DEP-11 64x64 Icons [331 kB]
+获取:16 http://cn.archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 DEP-11 Metadata [5,964 B]
+获取:17 http://cn.archive.ubuntu.com/ubuntu xen
+获取:18 http://cn.archiEP-11 Metadata [5,100 B]
+</code></pre>
+</div>
+<p>这里仍然有一处报错，这个Release文件已经没有再维护更新，或者软件源更新网站已经过时，却又在新的软件源那里找不到这个文件的新版本，因此出现这个小错误，但是没有多大影响，这个文件已经过时，没有多大用处，只要其他文件顺利更新即可。</p>
+
+<p>接下来安装并查看docker</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt install docker.io
+$ docker --version
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>Docker version 1.13.1, build 092cba3
+</code></pre>
+</div>
+
+<p>###安装Docker Compose</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt install docker-compose
+$ docker-compose --version
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>docker-compose version 1.8.0, build unknown
+</code></pre>
+</div>
+
+<h3 id="golang安装">Golang安装</h3>
+<p>这里有些要求</p>
+
+<p>Fabric1.1.0版本要求安装Go1.9以上版本</p>
+
+<p>Fabric1.0.0版本要求安装Go1.7以上版本</p>
+
+<p>在golang官网下载下来go安装包后，解压到home目录下，也就是/home/路径下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ tar -zxvf go1.10.1.linux-amd64.tar.gz -C /home/
+</code></pre>
+</div>
+<p>接下来编辑环境变量文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudoi vim /etc/profile/
+</code></pre>
+</div>
+<p>添加如下内容:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>export GOPATH=$HOME/gocode
+export GOROOT=$HOME/go
+export PATH=$GOROOT/bin:$PATH
+</code></pre>
+</div>
+<p>修改完profile文件，需要source以重新实现这个文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ source /etc/profile/
+</code></pre>
+</div>
+<p>查看是否安装成功</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ go version
+go version go1.10.3 linux/amd64
+</code></pre>
+</div>
+<h3 id="安装node与npm">安装Node与npm</h3>
+
+<h4 id="安装nvm">安装nvm</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt update
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.10/install.sh | bash
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 12819  100 12819    0     0   1893      0  0:00:06  0:00:06 --:--:--  3011
+=&gt; Downloading nvm from git to '/home/parallels/.nvm'
+=&gt; 正克隆到 '/home/parallels/.nvm'...
+remote: Counting objects: 267, done.
+remote: Compressing objects: 100% (242/242), done.
+remote: Total 267 (delta 31), reused 86 (delta 15), pack-reused 0
+接收对象中: 100% (267/267), 119.46 KiB | 30.00 KiB/s, 完成.
+处理 delta 中: 100% (31/31), 完成.
+检查连接... 完成。
+=&gt; Compressing and cleaning up git repository
+
+=&gt; Appending nvm source string to /home/parallels/.bashrc
+=&gt; Appending bash_completion source string to /home/parallels/.bashrc
+=&gt; Close and reopen your terminal to start using nvm or run the following to use it now:
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] &amp;&amp; \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] &amp;&amp; \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ export NVM_DIR="$HOME/.nvm"
+$ [ -s "$NVM_DIR/nvm.sh" ] &amp;&amp; \. "$NVM_DIR/nvm.sh"
+</code></pre>
+</div>
+
+<h4 id="安装node">安装Node</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ nvm install v8.11.1
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>Downloading and installing node v8.11.1...
+Downloading https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz...
+######################################################################## 100.0%
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v8.11.1 (npm v5.6.0)
+Creating default alias: default -&gt; v8.11.1
+</code></pre>
+</div>
+
+<h4 id="检查node版本">检查Node版本</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ node -v
+</code></pre>
+</div>
+
+<p>输出:   <code class="highlighter-rouge">v8.11.1</code></p>
+
+<h4 id="检查npm版本">检查npm版本</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm -v
+</code></pre>
+</div>
+
+<p>输出:   <code class="highlighter-rouge">5.6.0</code></p>
+
+<p>###Hyperledger Fabric Samples 下载安装</p>
+
+<p>在任何一个路径下创建一个空目录（我是在/home/下）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ mkdir hyfa
+$ ls
+autoproxy.pac  Downloads         go    公共的  视频  文档  音乐
+Desktop        examples.desktop  hyfa  模板    图片  下载  桌面
+</code></pre>
+</div>
+
+<p>进入该目录</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cd hyfa/
+</code></pre>
+</div>
+<h4 id="下载方式一">下载方式一:</h4>
+
+<p><strong>新建文件bootstrap.sh</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ vim bootstrap.sh
+</code></pre>
+</div>
+
+<p>将<code class="highlighter-rouge">https://github.com/hyperledger/fabric/blob/master/scripts/bootstrap.sh</code>中的内容拷贝保存退出</p>
+
+<p>https://github.com/hyperledger/fabric/blob/master/scripts/bootstrap.sh中的内容如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+<span class="c"># Copyright IBM Corp. All Rights Reserved.</span>
+<span class="c">#</span>
+<span class="c"># SPDX-License-Identifier: Apache-2.0</span>
+<span class="c">#</span>
+
+<span class="c"># if version not passed in, default to latest released version</span>
+<span class="nb">export </span><span class="nv">VERSION</span><span class="o">=</span>1.1.0
+<span class="c"># if ca version not passed in, default to latest released version</span>
+<span class="nb">export </span><span class="nv">CA_VERSION</span><span class="o">=</span><span class="nv">$VERSION</span>
+<span class="c"># current version of thirdparty images (couchdb, kafka and zookeeper) released</span>
+<span class="nb">export </span><span class="nv">THIRDPARTY_IMAGE_VERSION</span><span class="o">=</span>0.4.6
+<span class="nb">export </span><span class="nv">ARCH</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">"</span><span class="k">$(</span>uname -s|tr <span class="s1">'[:upper:]'</span> <span class="s1">'[:lower:]'</span>|sed <span class="s1">'s/mingw64_nt.*/windows/'</span><span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname -m | sed <span class="s1">'s/x86_64/amd64/g'</span><span class="k">)</span><span class="s2">"</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">MARCH</span><span class="o">=</span><span class="k">$(</span>uname -m<span class="k">)</span>
+
+printHelp<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">"Usage: bootstrap.sh [&lt;version&gt;] [&lt;ca_version&gt;] [&lt;thirdparty_version&gt;][-d -s -b]"</span>
+  <span class="nb">echo
+  echo</span> <span class="s2">"-d - bypass docker image download"</span>
+  <span class="nb">echo</span> <span class="s2">"-s - bypass fabric-samples repo clone"</span>
+  <span class="nb">echo</span> <span class="s2">"-b - bypass download of platform-specific binaries"</span>
+  <span class="nb">echo
+  echo</span> <span class="s2">"e.g. bootstrap.sh 1.1.1 -s"</span>
+  <span class="nb">echo</span> <span class="s2">"would download docker images and binaries for version 1.1.1"</span>
+<span class="o">}</span>
+
+dockerFabricPull<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">FABRIC_TAG</span><span class="o">=</span><span class="nv">$1</span>
+  <span class="k">for </span>IMAGES <span class="k">in </span>peer orderer ccenv javaenv tools; <span class="k">do
+      </span><span class="nb">echo</span> <span class="s2">"==&gt; FABRIC IMAGE: </span><span class="nv">$IMAGES</span><span class="s2">"</span>
+      <span class="nb">echo
+      </span>docker pull hyperledger/fabric-<span class="nv">$IMAGES</span>:<span class="nv">$FABRIC_TAG</span>
+      docker tag hyperledger/fabric-<span class="nv">$IMAGES</span>:<span class="nv">$FABRIC_TAG</span> hyperledger/fabric-<span class="nv">$IMAGES</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+
+dockerThirdPartyImagesPull<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">THIRDPARTY_TAG</span><span class="o">=</span><span class="nv">$1</span>
+  <span class="k">for </span>IMAGES <span class="k">in </span>couchdb kafka zookeeper; <span class="k">do
+      </span><span class="nb">echo</span> <span class="s2">"==&gt; THIRDPARTY DOCKER IMAGE: </span><span class="nv">$IMAGES</span><span class="s2">"</span>
+      <span class="nb">echo
+      </span>docker pull hyperledger/fabric-<span class="nv">$IMAGES</span>:<span class="nv">$THIRDPARTY_TAG</span>
+      docker tag hyperledger/fabric-<span class="nv">$IMAGES</span>:<span class="nv">$THIRDPARTY_TAG</span> hyperledger/fabric-<span class="nv">$IMAGES</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+
+dockerCaPull<span class="o">()</span> <span class="o">{</span>
+      <span class="nb">local </span><span class="nv">CA_TAG</span><span class="o">=</span><span class="nv">$1</span>
+      <span class="nb">echo</span> <span class="s2">"==&gt; FABRIC CA IMAGE"</span>
+      <span class="nb">echo
+      </span>docker pull hyperledger/fabric-ca:<span class="nv">$CA_TAG</span>
+      docker tag hyperledger/fabric-ca:<span class="nv">$CA_TAG</span> hyperledger/fabric-ca
+<span class="o">}</span>
+
+samplesInstall<span class="o">()</span> <span class="o">{</span>
+  <span class="c"># clone (if needed) hyperledger/fabric-samples and checkout corresponding</span>
+  <span class="c"># version to the binaries and docker images to be downloaded</span>
+  <span class="k">if</span> <span class="o">[</span> -d first-network <span class="o">]</span>; <span class="k">then</span>
+    <span class="c"># if we are in the fabric-samples repo, checkout corresponding version</span>
+    <span class="nb">echo</span> <span class="s2">"===&gt; Checking out v</span><span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span><span class="s2"> branch of hyperledger/fabric-samples"</span>
+    git checkout v<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>
+  <span class="k">elif</span> <span class="o">[</span> -d fabric-samples <span class="o">]</span>; <span class="k">then</span>
+    <span class="c"># if fabric-samples repo already cloned and in current directory,</span>
+    <span class="c"># cd fabric-samples and checkout corresponding version</span>
+    <span class="nb">echo</span> <span class="s2">"===&gt; Checking out v</span><span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span><span class="s2"> branch of hyperledger/fabric-samples"</span>
+    <span class="nb">cd </span>fabric-samples <span class="o">&amp;&amp;</span> git checkout v<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>
+  <span class="k">else
+    </span><span class="nb">echo</span> <span class="s2">"===&gt; Cloning hyperledger/fabric-samples repo and checkout v</span><span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span><span class="s2">"</span>
+    git clone -b master https://github.com/hyperledger/fabric-samples.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>fabric-samples <span class="o">&amp;&amp;</span> git checkout v<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c"># Incrementally downloads the .tar.gz file locally first, only decompressing it</span>
+<span class="c"># after the download is complete. This is slower than binaryDownload() but</span>
+<span class="c"># allows the download to be resumed.</span>
+binaryIncrementalDownload<span class="o">()</span> <span class="o">{</span>
+      <span class="nb">local </span><span class="nv">BINARY_FILE</span><span class="o">=</span><span class="nv">$1</span>
+      <span class="nb">local </span><span class="nv">URL</span><span class="o">=</span><span class="nv">$2</span>
+      curl -f -s -C - <span class="k">${</span><span class="nv">URL</span><span class="k">}</span> -o <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="o">||</span> <span class="nv">rc</span><span class="o">=</span><span class="nv">$?</span>
+      <span class="c"># Due to limitations in the current Nexus repo:</span>
+      <span class="c"># curl returns 33 when there's a resume attempt with no more bytes to download</span>
+      <span class="c"># curl returns 2 after finishing a resumed download</span>
+      <span class="c"># with -f curl returns 22 on a 404</span>
+      <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$rc</span><span class="s2">"</span> <span class="o">=</span> 22 <span class="o">]</span>; <span class="k">then</span>
+	  <span class="c"># looks like the requested file doesn't actually exist so stop here</span>
+	  <span class="k">return </span>22
+      <span class="k">fi
+      if</span> <span class="o">[</span> -z <span class="s2">"</span><span class="nv">$rc</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="nv">$rc</span> -eq 33 <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="nv">$rc</span> -eq 2 <span class="o">]</span>; <span class="k">then</span>
+          <span class="c"># The checksum validates that RC 33 or 2 are not real failures</span>
+          <span class="nb">echo</span> <span class="s2">"==&gt; File downloaded. Verifying the md5sum..."</span>
+          <span class="nv">localMd5sum</span><span class="o">=</span><span class="k">$(</span>md5sum <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> | awk <span class="s1">'{print $1}'</span><span class="k">)</span>
+          <span class="nv">remoteMd5sum</span><span class="o">=</span><span class="k">$(</span>curl -s <span class="k">${</span><span class="nv">URL</span><span class="k">}</span>.md5<span class="k">)</span>
+          <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$localMd5sum</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"</span><span class="nv">$remoteMd5sum</span><span class="s2">"</span> <span class="o">]</span>; <span class="k">then
+              </span><span class="nb">echo</span> <span class="s2">"==&gt; Extracting </span><span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span><span class="s2">..."</span>
+              tar xzf ./<span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> --overwrite
+	      <span class="nb">echo</span> <span class="s2">"==&gt; Done."</span>
+              rm -f <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span>.md5
+          <span class="k">else
+              </span><span class="nb">echo</span> <span class="s2">"Download failed: the local md5sum is different from the remote md5sum. Please try again."</span>
+              rm -f <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span>.md5
+              <span class="nb">exit </span>1
+          <span class="k">fi
+      else
+          </span><span class="nb">echo</span> <span class="s2">"Failure downloading binaries (curl RC=</span><span class="nv">$rc</span><span class="s2">). Please try again and the download will resume from where it stopped."</span>
+          <span class="nb">exit </span>1
+      <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c"># This will attempt to download the .tar.gz all at once, but will trigger the</span>
+<span class="c"># binaryIncrementalDownload() function upon a failure, allowing for resume</span>
+<span class="c"># if there are network failures.</span>
+binaryDownload<span class="o">()</span> <span class="o">{</span>
+      <span class="nb">local </span><span class="nv">BINARY_FILE</span><span class="o">=</span><span class="nv">$1</span>
+      <span class="nb">local </span><span class="nv">URL</span><span class="o">=</span><span class="nv">$2</span>
+      <span class="nb">echo</span> <span class="s2">"===&gt; Downloading: "</span> <span class="k">${</span><span class="nv">URL</span><span class="k">}</span>
+      <span class="c"># Check if a previous failure occurred and the file was partially downloaded</span>
+      <span class="k">if</span> <span class="o">[</span> -e <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then
+          </span><span class="nb">echo</span> <span class="s2">"==&gt; Partial binary file found. Resuming download..."</span>
+          binaryIncrementalDownload <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="k">${</span><span class="nv">URL</span><span class="k">}</span>
+      <span class="k">else
+          </span>curl <span class="k">${</span><span class="nv">URL</span><span class="k">}</span> | tar xz <span class="o">||</span> <span class="nv">rc</span><span class="o">=</span><span class="nv">$?</span>
+          <span class="k">if</span> <span class="o">[</span> ! -z <span class="s2">"</span><span class="nv">$rc</span><span class="s2">"</span> <span class="o">]</span>; <span class="k">then
+              </span><span class="nb">echo</span> <span class="s2">"==&gt; There was an error downloading the binary file. Switching to incremental download."</span>
+              <span class="nb">echo</span> <span class="s2">"==&gt; Downloading file..."</span>
+              binaryIncrementalDownload <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> <span class="k">${</span><span class="nv">URL</span><span class="k">}</span>
+	  <span class="k">else
+	      </span><span class="nb">echo</span> <span class="s2">"==&gt; Done."</span>
+          <span class="k">fi
+      fi</span>
+<span class="o">}</span>
+
+binariesInstall<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">"===&gt; Downloading version </span><span class="k">${</span><span class="nv">FABRIC_TAG</span><span class="k">}</span><span class="s2"> platform specific fabric binaries"</span>
+  binaryDownload <span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span> https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/<span class="k">${</span><span class="nv">ARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>/<span class="k">${</span><span class="nv">BINARY_FILE</span><span class="k">}</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 22 <span class="o">]</span>; <span class="k">then
+     </span><span class="nb">echo
+     echo</span> <span class="s2">"------&gt; </span><span class="k">${</span><span class="nv">FABRIC_TAG</span><span class="k">}</span><span class="s2"> platform specific fabric binary is not available to download &lt;----"</span>
+     <span class="nb">echo
+   </span><span class="k">fi
+
+  </span><span class="nb">echo</span> <span class="s2">"===&gt; Downloading version </span><span class="k">${</span><span class="nv">CA_TAG</span><span class="k">}</span><span class="s2"> platform specific fabric-ca-client binary"</span>
+  binaryDownload <span class="k">${</span><span class="nv">CA_BINARY_FILE</span><span class="k">}</span> https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric-ca/hyperledger-fabric-ca/<span class="k">${</span><span class="nv">ARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">CA_VERSION</span><span class="k">}</span>/<span class="k">${</span><span class="nv">CA_BINARY_FILE</span><span class="k">}</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 22 <span class="o">]</span>; <span class="k">then
+     </span><span class="nb">echo
+     echo</span> <span class="s2">"------&gt; </span><span class="k">${</span><span class="nv">CA_TAG</span><span class="k">}</span><span class="s2"> fabric-ca-client binary is not available to download  (Available from 1.1.0-rc1) &lt;----"</span>
+     <span class="nb">echo
+   </span><span class="k">fi</span>
+<span class="o">}</span>
+
+dockerInstall<span class="o">()</span> <span class="o">{</span>
+  which docker &gt;&amp; /dev/null
+  <span class="nv">NODOCKER</span><span class="o">=</span><span class="nv">$?</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">NODOCKER</span><span class="k">}</span><span class="s2">"</span> <span class="o">==</span> 0 <span class="o">]</span>; <span class="k">then
+	  </span><span class="nb">echo</span> <span class="s2">"===&gt; Pulling fabric Images"</span>
+	  dockerFabricPull <span class="k">${</span><span class="nv">FABRIC_TAG</span><span class="k">}</span>
+	  <span class="nb">echo</span> <span class="s2">"===&gt; Pulling fabric ca Image"</span>
+	  dockerCaPull <span class="k">${</span><span class="nv">CA_TAG</span><span class="k">}</span>
+	  <span class="nb">echo</span> <span class="s2">"===&gt; Pulling thirdparty docker images"</span>
+	  dockerThirdPartyImagesPull <span class="k">${</span><span class="nv">THIRDPARTY_TAG</span><span class="k">}</span>
+	  <span class="nb">echo
+	  echo</span> <span class="s2">"===&gt; List out hyperledger docker images"</span>
+	  docker images | grep hyperledger<span class="k">*</span>
+  <span class="k">else
+    </span><span class="nb">echo</span> <span class="s2">"========================================================="</span>
+    <span class="nb">echo</span> <span class="s2">"Docker not installed, bypassing download of Fabric images"</span>
+    <span class="nb">echo</span> <span class="s2">"========================================================="</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="nv">DOCKER</span><span class="o">=</span><span class="nb">true
+</span><span class="nv">SAMPLES</span><span class="o">=</span><span class="nb">true
+</span><span class="nv">BINARIES</span><span class="o">=</span><span class="nb">true</span>
+
+<span class="c"># Parse commandline args pull out</span>
+<span class="c"># version and/or ca-version strings first</span>
+<span class="k">if </span><span class="nb">echo</span> <span class="nv">$1</span> | grep -q <span class="s1">'\d'</span>; <span class="k">then
+  </span><span class="nv">VERSION</span><span class="o">=</span><span class="nv">$1</span>;<span class="nb">shift
+  </span><span class="k">if </span><span class="nb">echo</span> <span class="nv">$1</span> | grep -q <span class="s1">'\d'</span>; <span class="k">then
+    </span><span class="nv">CA_VERSION</span><span class="o">=</span><span class="nv">$1</span>;<span class="nb">shift
+    </span><span class="k">if </span><span class="nb">echo</span> <span class="nv">$1</span> | grep -q <span class="s1">'\d'</span>; <span class="k">then
+      </span><span class="nv">THIRDPARTY_IMAGE_VERSION</span><span class="o">=</span><span class="nv">$1</span>;<span class="nb">shift
+    </span><span class="k">fi
+  fi
+fi</span>
+
+<span class="c"># prior to 1.2.0 architecture was determined by uname -m</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$VERSION</span> <span class="o">=</span>~ ^1<span class="se">\.</span><span class="o">[</span>0-1]<span class="se">\.</span><span class="k">*</span> <span class="o">]]</span>; <span class="k">then
+  </span><span class="nb">export </span><span class="nv">FABRIC_TAG</span><span class="o">=</span><span class="k">${</span><span class="nv">MARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>
+  <span class="nb">export </span><span class="nv">CA_TAG</span><span class="o">=</span><span class="k">${</span><span class="nv">MARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">CA_VERSION</span><span class="k">}</span>
+  <span class="nb">export </span><span class="nv">THIRDPARTY_TAG</span><span class="o">=</span><span class="k">${</span><span class="nv">MARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">THIRDPARTY_IMAGE_VERSION</span><span class="k">}</span>
+<span class="k">else</span>
+  <span class="c"># starting with 1.2.0, multi-arch images will be default</span>
+  : <span class="k">${</span><span class="nv">CA_TAG</span>:<span class="p">=</span><span class="s2">"</span><span class="nv">$CA_VERSION</span><span class="s2">"</span><span class="k">}</span>
+  : <span class="k">${</span><span class="nv">FABRIC_TAG</span>:<span class="p">=</span><span class="s2">"</span><span class="nv">$VERSION</span><span class="s2">"</span><span class="k">}</span>
+  : <span class="k">${</span><span class="nv">THIRDPARTY_TAG</span>:<span class="p">=</span><span class="s2">"</span><span class="nv">$THIRDPARTY_IMAGE_VERSION</span><span class="s2">"</span><span class="k">}</span>
+<span class="k">fi
+
+</span><span class="nv">BINARY_FILE</span><span class="o">=</span>hyperledger-fabric-<span class="k">${</span><span class="nv">ARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">VERSION</span><span class="k">}</span>.tar.gz
+<span class="nv">CA_BINARY_FILE</span><span class="o">=</span>hyperledger-fabric-ca-<span class="k">${</span><span class="nv">ARCH</span><span class="k">}</span>-<span class="k">${</span><span class="nv">CA_VERSION</span><span class="k">}</span>.tar.gz
+
+<span class="c"># then parse opts</span>
+<span class="k">while </span><span class="nb">getopts</span> <span class="s2">"h?dsb"</span> opt; <span class="k">do
+  case</span> <span class="s2">"</span><span class="nv">$opt</span><span class="s2">"</span> <span class="k">in
+    </span>h|<span class="se">\?</span><span class="p">)</span>
+      printHelp
+      <span class="nb">exit </span>0
+    <span class="p">;;</span>
+    d<span class="p">)</span>  <span class="nv">DOCKER</span><span class="o">=</span><span class="nb">false</span>
+    <span class="p">;;</span>
+    s<span class="p">)</span>  <span class="nv">SAMPLES</span><span class="o">=</span><span class="nb">false</span>
+    <span class="p">;;</span>
+    b<span class="p">)</span>  <span class="nv">BINARIES</span><span class="o">=</span><span class="nb">false</span>
+    <span class="p">;;</span>
+  <span class="k">esac</span>
+<span class="k">done
+
+if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$SAMPLES</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"true"</span> <span class="o">]</span>; <span class="k">then
+  </span><span class="nb">echo
+  echo</span> <span class="s2">"Installing hyperledger/fabric-samples repo"</span>
+  <span class="nb">echo
+  </span>samplesInstall
+<span class="k">fi
+if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$BINARIES</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"true"</span> <span class="o">]</span>; <span class="k">then
+  </span><span class="nb">echo
+  echo</span> <span class="s2">"Installing Hyperledger Fabric binaries"</span>
+  <span class="nb">echo
+  </span>binariesInstall
+<span class="k">fi
+if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$DOCKER</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"true"</span> <span class="o">]</span>; <span class="k">then
+  </span><span class="nb">echo
+  echo</span> <span class="s2">"Installing Hyperledger Fabric docker images"</span>
+  <span class="nb">echo
+  </span>dockerInstall
+<span class="k">fi</span>
+</code></pre>
+</div>
+
+<p><strong>赋予bootstrap.sh可执行权限并运行</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ chmod +x bootstrap.sh
+</code></pre>
+</div>
+
+<p><strong>配置docker加速器</strong></p>
+
+<p>配置docker加速器的目的是为了在下载docker镜像文件时加速</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://8890cb8b.m.daocloud.io
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>docker version &gt;= 1.12
+[sudo] parallels 的密码：
+{"registry-mirrors": ["http://8890cb8b.m.daocloud.io"]}
+Success.
+You need to restart docker to take effect: sudo systemctl restart docker.service
+</code></pre>
+</div>
+<p><strong>重启docker服务</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo systemctl restart docker.service
+</code></pre>
+</div>
+
+<p><strong>执行<code class="highlighter-rouge">bootstrap.sh</code></strong></p>
+
+<p><strong>确定网络稳定,否则会导致各种问题，例如下载到一半时网络超时，下载失败等等</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo ./bootstrap.sh 1.1.0
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>Installing hyperledger/fabric-samples repo
+
+===&gt; Cloning hyperledger/fabric-samples repo and checkout v1.1.0
+正克隆到 'fabric-samples'...
+fatal: unable to access 'https://github.com/hyperledger/fabric-samples.git/': Failed to connect to github.com port 443: 没有到主机的路由
+
+Installing Hyperledger Fabric binaries
+
+===&gt; Downloading version x86_64-1.1.0 platform specific fabric binaries
+===&gt; Downloading:  https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.1.0/hyperledger-fabric-linux-amd64-1.1.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:19 --:--:--     0curl: (6) Could not resolve host: nexus.hyperledger.org
+
+gzip: stdin: unexpected end of file
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now
+==&gt; There was an error downloading the binary file. Switching to incremental download.
+==&gt; Downloading file...
+Failure downloading binaries (curl RC=6). Please try again and the download will resume from where it stopped.
+</code></pre>
+</div>
+<p>上面显示有下载失败的地方，可能受网络环境的影响
+重新执行命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo ./bootstrap.sh 1.1.0
+
+Installing hyperledger/fabric-samples repo
+
+===&gt; Checking out v1.1.0 branch of hyperledger/fabric-samples
+HEAD 目前位于 1252c7a... [FAB-8920] Pin fabric-samples to node.js "~1.1.0"
+
+Installing Hyperledger Fabric binaries
+
+===&gt; Downloading version x86_64-1.1.0 platform specific fabric binaries
+===&gt; Downloading:  https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.1.0/hyperledger-fabric-linux-amd64-1.1.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 35.4M  100 35.4M    0     0   396k      0  0:01:31  0:01:31 --:--:--  362k
+==&gt; Done.
+===&gt; Downloading version x86_64-1.1.0 platform specific fabric-ca-client binary
+===&gt; Downloading:  https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric-ca/hyperledger-fabric-ca/linux-amd64-1.1.0/hyperledger-fabric-ca-linux-amd64-1.1.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 6109k  100 6109k    0     0   283k      0  0:00:21  0:00:21 --:--:--  428k
+==&gt; Done.
+
+Installing Hyperledger Fabric docker images
+
+===&gt; Pulling fabric Images
+==&gt; FABRIC IMAGE: peer
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-peer
+1be7f2b886e8: Already exists
+6fbc4a21b806: Already exists c71a6f8e1378: Already exists
+be3072e5a37: Already exists 0c6d2f59700: Already exists
+d36120d8a5: Already exists 0af9ec263e: Already exists
+753795186: Already exists 1737bd14b: Already exists
+222da7f3: Already exists Dgs:sha256:54b11f276606df2af01741bae3034c71566b6133e56244289f2471d1289c4a87
+Status: Image is up to date for hyperledger/fabric-peer:x86_64-1.1.0
+==&gt; FABRIC IMAGE: orderer
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-orderer
+Digest: sha256:0c3a3b5ecfd24b513da22bbb77da7b3f5bca9c121cc0ac5c46ba04c97c163654
+Status: Image is up to date for hyperledger/fabric-orderer:x86_64-1.1.0
+==&gt; FABRIC IMAGE: ccenv
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-ccenv
+Digest: sha256:07818367dc6d4264472d24b21819f9dc4e16e890d81ddfacee0341a22d72050b
+Status: Image is up to date for hyperledger/fabric-ccenv:x86_64-1.1.0
+==&gt; FABRIC IMAGE: javaenv
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-javaenv
+Digest: sha256:d2588c0556b6fc79131f638b02a7a77337363e2c2f38a9c47798a6d99bd2f20e
+Status: Image is up to date for hyperledger/fabric-javaenv:x86_64-1.1.0
+==&gt; FABRIC IMAGE: tools
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-tools
+Digest: sha256:36d7fa8e8ddcc19fed8e1c3c06bc6ae1dac18c35e8a884188d2c08df3e5a4472
+Status: Image is up to date for hyperledger/fabric-tools:x86_64-1.1.0
+===&gt; Pulling fabric ca Image
+==&gt; FABRIC CA IMAGE
+
+x86_64-1.1.0: Pulling from hyperledger/fabric-ca
+1be7f2b886e8: Already exists
+fca1806: Already exists c168178: Already exists
+b37ea7: Already exists 0cdf90: Already exists
+d31085 Already exists 0afe23:Already exists
+b7019c lready exists 714a2e:Aready exists
+72c8c4 leady exists 082ad4:Arady exists
+317879 ledy exists Dgs:sa5:75fbdfcde58d058b788ca78d20a92eff582b934e5c34d2c1ff665d1d1fc67
+Status: Image is up to date for hyperledger/fabric-ca:x86_64-1.1.0
+===&gt; Pulling thirdparty docker images
+==&gt; THIRDPARTY DOCKER IMAGE: couchdb
+
+x86_64-0.4.6: Pulling from hyperledger/fabric-couchdb
+8f7c85c2269a: Pull complete
+e2446d ulcmplete 30e5c8:Pl oplete
+dfcbc1 ulcmlete e7a62e:Pl opete
+b45a63 ulcmlte 6dcde1:Pl opee
+fdb48d ulcmlt 9ea13b:Pl opee
+87b2e4a0b9d2: Pull complete 55f108d3ee4a: Pull complete
+7fcc0:Pl opee
+38be4b23f81: Pull complete 58042703e1f: Pull complete 803e6:Pl opee
+7dbfc27ecb: Pull complete 3135d1bd00: Pull complete
+7620:Pl opee
+9f1888344: Pull complete Dies: ha256:1a5564ba3827281bcbfeb88563dd72855157494bf22ac6fcb46fc82d17bb
+Status: Downloaded newer image for hyperledger/fabric-couchdb:x86_64-0.4.6
+==&gt; THIRDPARTY DOCKER IMAGE: kafka
+
+x86_64-0.4.6: Pulling from hyperledger/fabric-kafka
+8f7c85c2269a: Already exists 97e9ad:Arayeist
+0e08:Arayeit 9fcc:Arayeit e82a64ce: Already exists
+8523Arayeit 6d4edec9:Already exists f248 rayeit 9ea4c3bd Aready exists
+2a9:layeit 5f0d3e4: lrady exists 673bPlopee
+e92dc7: ul cmplete
+e61Plolt Det h25:3736f47545d26f77cae68dbc187060a55e83a0c6b228e86304
+Status: Downloaded newer image for hyperledger/fabric-kafka:x86_64-0.4.6
+==&gt; THIRDPARTY DOCKER IMAGE: zookeeper
+
+x86_64-0.4.6: Pulling from hyperledger/fabric-zookeeper
+8f7c85c2269a: Already exists 97e9ad:Arad eits
+309c5c88: Areay eists
+dfcc rdess e82262e:Aleay xits 94a3la is
+8dc7e1:Aredyexst 
+dddla is96a15b:Arad eiss 87b2e4a0b9d2: Already exists 
+5183ea ledyeist 
+7682:u mle5e4f141 Pl oplte
+cdddfcc9fe: Pull complete 
+ca676a:Pl oplt 
+ists2:d6636825396fe44862b6e79d6f94f970531a2
+Status: Downloaded newer image for hyperledger/fabric-zookeeper:x86_64-0.4.6
+
+===&gt; List out hyperledger docker images
+hyperledger/fabric-ca          latest              72617b4fa9b4        3 months ago        299 MB
+hyperledger/fabric-ca          x86_64-1.1.0        72617b4fa9b4        3 months ago        299 MB
+hyperledger/fabric-tools       latest              b7bfddf508bc        3 months ago        1.46 GB
+hyperledger/fabric-tools       x86_64-1.1.0        b7bfddf508bc        3 months ago        1.46 GB
+hyperledger/fabric-orderer     latest              ce0c810df36a        3 months ago        180 MB
+hyperledger/fabric-orderer     x86_64-1.1.0        ce0c810df36a        3 months ago        180 MB
+hyperledger/fabric-peer        latest              b023f9be0771        3 months ago        187 MB
+hyperledger/fabric-peer        x86_64-1.1.0        b023f9be0771        3 months ago        187 MB
+hyperledger/fabric-javaenv     latest              82098abb1a17        3 months ago        1.52 GB
+hyperledger/fabric-javaenv     x86_64-1.1.0        82098abb1a17        3 months ago        1.52 GB
+hyperledger/fabric-ccenv       latest              c8b4909d8d46        3 months ago        1.39 GB
+hyperledger/fabric-ccenv       x86_64-1.1.0        c8b4909d8d46        3 months ago        1.39 GB
+hyperledger/fabric-zookeeper   latest              92cbb952b6f8        4 months ago        1.39 GB
+hyperledger/fabric-zookeeper   x86_64-0.4.6        92cbb952b6f8        4 months ago        1.39 GB
+hyperledger/fabric-kafka       latest              554c591b86a8        4 months ago        1.4 GB
+hyperledger/fabric-kafka       x86_64-0.4.6        554c591b86a8        4 months ago        1.4 GB
+hyperledger/fabric-couchdb     latest              7e73c828fc5b        4 months ago        1.56 GB
+hyperledger/fabric-couchdb     x86_64-0.4.6        7e73c828fc5b        4 months ago        1.56 GB
+</code></pre>
+</div>
+
+<p>下载完成后, 查看相关输出内容, 如果下载有失败的镜像, 就要再次执行  <code class="highlighter-rouge">$ sudo ./bootstrap.sh 1.1.0</code>  命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ docker images
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.26/images/json: dial unix /var/run/docker.sock: connect: permission denied
+</code></pre>
+</div>
+<p>这里是给权限，执行不了这个命令，需要加上sudo</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo docker images
+[sudo] parallels 的密码：
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+hyperledger/fabric-ca          latest              72617b4fa9b4        3 months ago        299 MB
+hyperledger/fabric-ca          x86_64-1.1.0        72617b4fa9b4        3 months ago        299 MB
+hyperledger/fabric-tools       latest              b7bfddf508bc        3 months ago        1.46 GB
+hyperledger/fabric-tools       x86_64-1.1.0        b7bfddf508bc        3 months ago        1.46 GB
+hyperledger/fabric-orderer     latest              ce0c810df36a        3 months ago        180 MB
+hyperledger/fabric-orderer     x86_64-1.1.0        ce0c810df36a        3 months ago        180 MB
+hyperledger/fabric-peer        latest              b023f9be0771        3 months ago        187 MB
+hyperledger/fabric-peer        x86_64-1.1.0        b023f9be0771        3 months ago        187 MB
+hyperledger/fabric-javaenv     latest              82098abb1a17        3 months ago        1.52 GB
+hyperledger/fabric-javaenv     x86_64-1.1.0        82098abb1a17        3 months ago        1.52 GB
+hyperledger/fabric-ccenv       latest              c8b4909d8d46        3 months ago        1.39 GB
+hyperledger/fabric-ccenv       x86_64-1.1.0        c8b4909d8d46        3 months ago        1.39 GB
+hyperledger/fabric-zookeeper   latest              92cbb952b6f8        4 months ago        1.39 GB
+hyperledger/fabric-zookeeper   x86_64-0.4.6        92cbb952b6f8        4 months ago        1.39 GB
+hyperledger/fabric-kafka       latest              554c591b86a8        4 months ago        1.4 GB
+hyperledger/fabric-kafka       x86_64-0.4.6        554c591b86a8        4 months ago        1.4 GB
+hyperledger/fabric-couchdb     latest              7e73c828fc5b        4 months ago        1.56 GB
+hyperledger/fabric-couchdb     x86_64-0.4.6        7e73c828fc5b        4 months ago        1.56 GB
+
+</code></pre>
+</div>
+<p>出现上面的显示结果说明安装成功</p>
+
+  </section>
+  <h2 style="color:red"><strong>版权声明：博客中的文章版权归博主所有，不可作商用，转载请注明出处，合作请联系：Gump(微信)</strong></h2>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <!-- <span>扫码支持</span> -->
+                    <img src="/images/payimg/alipayimg.png" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">
+                    <img src="/images/payimg/weipayimg.png" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/03/08/ipfs/" data-toggle="tooltip" data-placement="top" title="IPFS">上一篇：  <span>IPFS</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2018/03/18/fabric%E7%9F%A5%E8%AF%862/" data-toggle="tooltip" data-placement="top" title="Hyperledger Fabric知识记录（2）-- Fabric网络的自启动和手启动">下一篇：  <span>Hyperledger Fabric知识记录（2）-- Fabric网络的自启动和手启动</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=Hyperledger Fabric知识记录（1）-- 概念与环境搭建 ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5351843558" title="@5351843558 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/chengpizi" title="@chengpizi 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:1822300185@qq.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="http://www.kongyixueyuan.com">区块链技术视频网站</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+        Copyright &copy; 2018 Gump区块链博客 京ICP备15065741号. 
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>
